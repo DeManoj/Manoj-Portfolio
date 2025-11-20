@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manoj Tamang - Senior QA Automation Engineer</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/typed.js/2.0.12/typed.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.7.0/p5.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Inter:wght@300;400;500;600&family=Fira+Code:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --deep-space: #0a0e1a;
+            --terminal-green: #00ff41;
+            --warning-amber: #ffa500;
+            --error-red: #ff4757;
+            --steel-gray: #2c3e50;
+            --soft-white: #ecf0f1;
+            --muted-blue: #3742fa;
+            --dark-gray: #1e1e1e;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--deep-space);
+            color: var(--soft-white);
+            overflow-x: hidden;
+        }
+        
+        .font-mono { font-family: 'JetBrains Mono', monospace; }
+        .font-code { font-family: 'Fira Code', monospace; }
+        
+        .terminal-green { color: var(--terminal-green); }
+        .terminal-green-bg { background-color: var(--terminal-green); }
+        .warning-amber { color: var(--warning-amber); }
+        .error-red { color: var(--error-red); }
+        .muted-blue { color: var(--muted-blue); }
+        
+        .gradient-text {
+            background: linear-gradient(45deg, var(--terminal-green), var(--muted-blue));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .glass-card {
+            background: rgba(44, 62, 80, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(0, 255, 65, 0.2);
+            border-radius: 12px;
+        }
+        
+        .neon-border {
+            box-shadow: 0 0 20px rgba(0, 255, 65, 0.3);
+            border: 1px solid var(--terminal-green);
+        }
+        
+        .hover-lift {
+            transition: all 0.3s ease;
+        }
+        
+        .hover-lift:hover {
+            transform: translateY(-8px) rotateX(5deg);
+            box-shadow: 0 20px 40px rgba(0, 255, 65, 0.2);
+        }
+        
+        .pulse-green {
+            animation: pulse-green 2s infinite;
+        }
+        
+        @keyframes pulse-green {
+            0%, 100% { box-shadow: 0 0 20px rgba(0, 255, 65, 0.3); }
+            50% { box-shadow: 0 0 40px rgba(0, 255, 65, 0.6); }
+        }
+        
+        .typing-cursor::after {
+            content: '|';
+            animation: blink 1s infinite;
+        }
+        
+        @keyframes blink {
+            0%, 50% { opacity: 1; }
+            51%, 100% { opacity: 0; }
+        }
+        
+        .matrix-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            opacity: 0.1;
+        }
+        
+        .test-status-running { color: var(--warning-amber); }
+        .test-status-passed { color: var(--terminal-green); }
+        .test-status-failed { color: var(--error-red); }
+        
+        .progress-bar {
+            background: linear-gradient(90deg, var(--terminal-green) 0%, var(--muted-blue) 100%);
+            height: 4px;
+            border-radius: 2px;
+            transition: width 0.3s ease;
+        }
+        
+        .nav-link {
+            position: relative;
+            transition: all 0.3s ease;
+        }
+        
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--terminal-green);
+            transition: width 0.3s ease;
+        }
+        
+        .nav-link:hover::after {
+            width: 100%;
+        }
+        
+        .reveal {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+            transition: all 0.6s ease;
+        }
+    </style>
+</head>
+<body>
+    <!-- Matrix Background -->
+    <div id="matrix-canvas" class="matrix-bg"></div>
+    
+    <!-- Navigation -->
+    <nav class="fixed top-0 w-full z-50 glass-card">
+        <div class="container mx-auto px-6 py-4">
+            <div class="flex items-center justify-between">
+                <div class="font-mono text-xl font-bold gradient-text">manoj@qa:~$</div>
+                <div class="hidden md:flex space-x-8">
+                    <a href="#home" class="nav-link hover:text-terminal-green transition-colors">Home</a>
+                    <a href="about.html" class="nav-link hover:text-terminal-green transition-colors">About</a>
+                    <a href="projects.html" class="nav-link hover:text-terminal-green transition-colors">Projects</a>
+                    <a href="contact.html" class="nav-link hover:text-terminal-green transition-colors">Contact</a>
+                </div>
+                <button id="mobile-menu-btn" class="md:hidden text-soft-white hover:text-terminal-green">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </nav>
+    
+    <!-- Hero Section -->
+    <section id="home" class="min-h-screen flex items-center justify-center pt-20 px-6">
+        <div class="container mx-auto">
+            <div class="grid lg:grid-cols-2 gap-12 items-center">
+                <div class="reveal">
+                    <h1 class="font-mono text-4xl lg:text-6xl font-bold mb-6">
+                        <span class="gradient-text">Senior QA Automation</span><br>
+                        <span class="text-soft-white">Engineer</span>
+                    </h1>
+                    <div class="font-code text-lg mb-8 h-16">
+                        <span id="typed-text" class="terminal-green"></span>
+                    </div>
+                    <p class="text-lg text-gray-300 mb-8 leading-relaxed">
+                        Transforming quality assurance through innovative automation solutions. 
+                        Pioneering frameworks that reduce manual effort by 90% and improve test coverage across enterprise platforms.
+                    </p>
+                    <div class="flex flex-col sm:flex-row gap-4">
+                        <button onclick="startTestExecution()" class="px-8 py-3 terminal-green-bg text-deep-space font-bold rounded-lg hover-lift pulse-green">
+                            Run Test Suite
+                        </button>
+                        <a href="projects.html" class="px-8 py-3 border-2 border-terminal-green text-terminal-green font-bold rounded-lg hover:bg-terminal-green hover:text-deep-space transition-all">
+                            View Frameworks
+                        </a>
+                    </div>
+                </div>
+                <div class="reveal">
+                    <div class="relative">
+                        <img src="resources/hero-automation-center.png" alt="QA Automation Command Center" class="w-full h-auto rounded-lg shadow-2xl">
+                        <div class="absolute inset-0 bg-gradient-to-t from-deep-space/50 to-transparent rounded-lg"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Test Execution Dashboard -->
+    <section class="py-20 px-6">
+        <div class="container mx-auto">
+            <div class="text-center mb-12 reveal">
+                <h2 class="font-mono text-3xl lg:text-4xl font-bold mb-4 gradient-text">Live Test Execution</h2>
+                <p class="text-gray-300 text-lg">Experience real-time automation testing in action</p>
+            </div>
+            
+            <div class="grid lg:grid-cols-3 gap-8">
+                <!-- Test Controls -->
+                <div class="glass-card p-6 hover-lift reveal">
+                    <h3 class="font-mono text-xl font-bold mb-4 terminal-green">Test Configuration</h3>
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium mb-2">Test Suite</label>
+                            <select id="test-suite" class="w-full p-3 bg-dark-gray border border-terminal-green rounded-lg text-soft-white">
+                                <option value="regression">Regression Suite</option>
+                                <option value="smoke">Smoke Tests</option>
+                                <option value="api">API Testing</option>
+                                <option value="performance">Performance Tests</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium mb-2">Environment</label>
+                            <select id="environment" class="w-full p-3 bg-dark-gray border border-terminal-green rounded-lg text-soft-white">
+                                <option value="staging">Staging</option>
+                                <option value="production">Production</option>
+                                <option value="development">Development</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium mb-2">Browser</label>
+                            <select id="browser" class="w-full p-3 bg-dark-gray border border-terminal-green rounded-lg text-soft-white">
+                                <option value="chrome">Chrome</option>
+                                <option value="firefox">Firefox</option>
+                                <option value="safari">Safari</option>
+                                <option value="edge">Edge</option>
+                            </select>
+                        </div>
+                        <button id="execute-tests" onclick="executeTests()" class="w-full py-3 terminal-green-bg text-deep-space font-bold rounded-lg hover-lift">
+                            Execute Tests
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Real-time Results -->
+                <div class="glass-card p-6 hover-lift reveal">
+                    <h3 class="font-mono text-xl font-bold mb-4 terminal-green">Execution Progress</h3>
+                    <div class="space-y-4">
+                        <div class="flex justify-between items-center">
+                            <span>Overall Progress</span>
+                            <span id="overall-progress" class="terminal-green">0%</span>
+                        </div>
+                        <div class="w-full bg-gray-700 rounded-full h-2">
+                            <div id="progress-bar" class="progress-bar w-0"></div>
+                        </div>
+                        <div class="grid grid-cols-2 gap-4 text-center">
+                            <div class="glass-card p-4">
+                                <div id="tests-passed" class="text-2xl font-bold terminal-green">0</div>
+                                <div class="text-sm text-gray-400">Passed</div>
+                            </div>
+                            <div class="glass-card p-4">
+                                <div id="tests-failed" class="text-2xl font-bold error-red">0</div>
+                                <div class="text-sm text-gray-400">Failed</div>
+                            </div>
+                        </div>
+                        <div class="space-y-2 max-h-40 overflow-y-auto">
+                            <div id="test-log" class="font-code text-sm space-y-1"></div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Performance Metrics -->
+                <div class="glass-card p-6 hover-lift reveal">
+                    <h3 class="font-mono text-xl font-bold mb-4 terminal-green">Performance Metrics</h3>
+                    <div id="metrics-chart" class="h-64"></div>
+                    <div class="mt-4 space-y-2">
+                        <div class="flex justify-between">
+                            <span>Execution Time</span>
+                            <span id="execution-time" class="terminal-green">0s</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span>Average Response</span>
+                            <span id="avg-response" class="muted-blue">0ms</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span>Coverage</span>
+                            <span id="coverage" class="warning-amber">0%</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- CI/CD Pipeline Visualization -->
+    <section class="py-20 px-6">
+        <div class="container mx-auto">
+            <div class="text-center mb-12 reveal">
+                <h2 class="font-mono text-3xl lg:text-4xl font-bold mb-4 gradient-text">CI/CD Pipeline</h2>
+                <p class="text-gray-300 text-lg">Visualize the automation workflow from code to deployment</p>
+            </div>
+            
+            <div class="glass-card p-8 reveal">
+                <div id="pipeline-chart" class="h-96"></div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Skills Overview -->
+    <section class="py-20 px-6">
+        <div class="container mx-auto">
+            <div class="text-center mb-12 reveal">
+                <h2 class="font-mono text-3xl lg:text-4xl font-bold mb-4 gradient-text">Technical Expertise</h2>
+                <p class="text-gray-300 text-lg">Core competencies in test automation and quality assurance</p>
+            </div>
+            
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div class="glass-card p-6 text-center hover-lift reveal">
+                    <div class="text-4xl mb-4">🧪</div>
+                    <h3 class="font-mono text-lg font-bold mb-2 terminal-green">Automation Tools</h3>
+                    <p class="text-gray-400 text-sm">Katalon, Cypress, Selenium, Protractor</p>
+                </div>
+                <div class="glass-card p-6 text-center hover-lift reveal">
+                    <div class="text-4xl mb-4">🔌</div>
+                    <h3 class="font-mono text-lg font-bold mb-2 terminal-green">API Testing</h3>
+                    <p class="text-gray-400 text-sm">Postman, REST Assured, JMeter</p>
+                </div>
+                <div class="glass-card p-6 text-center hover-lift reveal">
+                    <div class="text-4xl mb-4">⚡</div>
+                    <h3 class="font-mono text-lg font-bold mb-2 terminal-green">CI/CD</h3>
+                    <p class="text-gray-400 text-sm">Jenkins, GitLab CI, Azure DevOps</p>
+                </div>
+                <div class="glass-card p-6 text-center hover-lift reveal">
+                    <div class="text-4xl mb-4">📊</div>
+                    <h3 class="font-mono text-lg font-bold mb-2 terminal-green">Performance</h3>
+                    <p class="text-gray-400 text-sm">JMeter, Load Testing, Monitoring</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Footer -->
+    <footer class="py-12 px-6 border-t border-gray-800">
+        <div class="container mx-auto text-center">
+            <div class="font-mono text-sm text-gray-400">
+                <p>&copy; 2024 Manoj Tamang. Crafted with precision for QA excellence.</p>
+            </div>
+        </div>
+    </footer>
+    
+    <script src="main.js"></script>
+</body>
+</html>

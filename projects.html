@@ -1,0 +1,1063 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Projects - Manoj Tamang | QA Automation Frameworks</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.7.0/p5.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Inter:wght@300;400;500;600&family=Fira+Code:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --deep-space: #0a0e1a;
+            --terminal-green: #00ff41;
+            --warning-amber: #ffa500;
+            --error-red: #ff4757;
+            --steel-gray: #2c3e50;
+            --soft-white: #ecf0f1;
+            --muted-blue: #3742fa;
+            --dark-gray: #1e1e1e;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--deep-space);
+            color: var(--soft-white);
+            overflow-x: hidden;
+        }
+        
+        .font-mono { font-family: 'JetBrains Mono', monospace; }
+        .font-code { font-family: 'Fira Code', monospace; }
+        
+        .terminal-green { color: var(--terminal-green); }
+        .terminal-green-bg { background-color: var(--terminal-green); }
+        .warning-amber { color: var(--warning-amber); }
+        .error-red { color: var(--error-red); }
+        .muted-blue { color: var(--muted-blue); }
+        
+        .gradient-text {
+            background: linear-gradient(45deg, var(--terminal-green), var(--muted-blue));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .glass-card {
+            background: rgba(44, 62, 80, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(0, 255, 65, 0.2);
+            border-radius: 12px;
+        }
+        
+        .hover-lift {
+            transition: all 0.3s ease;
+        }
+        
+        .hover-lift:hover {
+            transform: translateY(-8px) rotateX(5deg);
+            box-shadow: 0 20px 40px rgba(0, 255, 65, 0.2);
+        }
+        
+        .reveal {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+            transition: all 0.6s ease;
+        }
+        
+        .framework-builder {
+            min-height: 500px;
+            border: 2px dashed rgba(0, 255, 65, 0.3);
+            border-radius: 12px;
+            padding: 2rem;
+            transition: all 0.3s ease;
+        }
+        
+        .framework-builder.drag-over {
+            border-color: var(--terminal-green);
+            background: rgba(0, 255, 65, 0.05);
+        }
+        
+        .component-item {
+            background: var(--dark-gray);
+            border: 1px solid var(--steel-gray);
+            border-radius: 8px;
+            padding: 1rem;
+            margin-bottom: 0.5rem;
+            cursor: grab;
+            transition: all 0.3s ease;
+        }
+        
+        .component-item:hover {
+            border-color: var(--terminal-green);
+            box-shadow: 0 4px 12px rgba(0, 255, 65, 0.2);
+        }
+        
+        .component-item.dragging {
+            opacity: 0.5;
+            transform: rotate(5deg);
+        }
+        
+        .framework-component {
+            background: rgba(0, 255, 65, 0.1);
+            border: 1px solid var(--terminal-green);
+            border-radius: 8px;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            position: relative;
+        }
+        
+        .framework-component .remove-btn {
+            position: absolute;
+            top: 0.5rem;
+            right: 0.5rem;
+            background: var(--error-red);
+            color: white;
+            border: none;
+            border-radius: 4px;
+            width: 24px;
+            height: 24px;
+            cursor: pointer;
+            font-size: 12px;
+        }
+        
+        .filter-btn {
+            padding: 0.5rem 1rem;
+            border: 1px solid var(--steel-gray);
+            border-radius: 6px;
+            background: transparent;
+            color: var(--soft-white);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .filter-btn:hover,
+        .filter-btn.active {
+            border-color: var(--terminal-green);
+            background: rgba(0, 255, 65, 0.1);
+            color: var(--terminal-green);
+        }
+        
+        .project-card {
+            background: rgba(44, 62, 80, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(0, 255, 65, 0.2);
+            border-radius: 12px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+        
+        .project-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(0, 255, 65, 0.2);
+            border-color: var(--terminal-green);
+        }
+        
+        .project-image {
+            height: 200px;
+            background: linear-gradient(135deg, var(--deep-space), var(--steel-gray));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+        }
+        
+        .code-block {
+            background: var(--dark-gray);
+            border: 1px solid var(--steel-gray);
+            border-radius: 8px;
+            padding: 1rem;
+            font-family: 'Fira Code', monospace;
+            font-size: 0.875rem;
+            overflow-x: auto;
+        }
+        
+        .performance-metric {
+            text-align: center;
+            padding: 1rem;
+            background: rgba(0, 255, 65, 0.05);
+            border-radius: 8px;
+            border: 1px solid rgba(0, 255, 65, 0.2);
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="fixed top-0 w-full z-50 glass-card">
+        <div class="container mx-auto px-6 py-4">
+            <div class="flex items-center justify-between">
+                <div class="font-mono text-xl font-bold gradient-text">manoj@qa:~$</div>
+                <div class="hidden md:flex space-x-8">
+                    <a href="index.html" class="nav-link hover:text-terminal-green transition-colors">Home</a>
+                    <a href="about.html" class="nav-link hover:text-terminal-green transition-colors">About</a>
+                    <a href="#projects" class="nav-link hover:text-terminal-green transition-colors">Projects</a>
+                    <a href="contact.html" class="nav-link hover:text-terminal-green transition-colors">Contact</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+    
+    <!-- Hero Section -->
+    <section id="projects" class="pt-24 pb-12 px-6">
+        <div class="container mx-auto">
+            <div class="text-center reveal">
+                <h1 class="font-mono text-4xl lg:text-6xl font-bold mb-6 gradient-text">
+                    Framework Showcase
+                </h1>
+                <p class="text-lg text-gray-300 mb-8 max-w-3xl mx-auto leading-relaxed">
+                    Interactive demonstrations of automation frameworks, architectural patterns, 
+                    and testing solutions that have transformed quality assurance processes.
+                </p>
+                <div class="flex flex-wrap justify-center gap-4 mb-12">
+                    <button class="filter-btn active" onclick="filterProjects('all')">All Projects</button>
+                    <button class="filter-btn" onclick="filterProjects('framework')">Frameworks</button>
+                    <button class="filter-btn" onclick="filterProjects('api')">API Testing</button>
+                    <button class="filter-btn" onclick="filterProjects('performance')">Performance</button>
+                    <button class="filter-btn" onclick="filterProjects('ci-cd')">CI/CD</button>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Framework Builder Tool -->
+    <section class="py-20 px-6">
+        <div class="container mx-auto">
+            <div class="text-center mb-12 reveal">
+                <h2 class="font-mono text-3xl lg:text-4xl font-bold mb-4 gradient-text">Interactive Framework Builder</h2>
+                <p class="text-gray-300 text-lg">Design your automation architecture with drag-and-drop components</p>
+            </div>
+            
+            <div class="grid lg:grid-cols-4 gap-8">
+                <!-- Component Library -->
+                <div class="glass-card p-6 reveal">
+                    <h3 class="font-mono text-xl font-bold mb-4 terminal-green">Components</h3>
+                    <div class="space-y-2">
+                        <div class="component-item" draggable="true" data-component="test-engine">
+                            <div class="font-bold text-sm terminal-green">🚀 Test Engine</div>
+                            <div class="text-xs text-gray-400">Core automation driver</div>
+                        </div>
+                        <div class="component-item" draggable="true" data-component="page-objects">
+                            <div class="font-bold text-sm terminal-green">📄 Page Objects</div>
+                            <div class="text-xs text-gray-400">UI element mappings</div>
+                        </div>
+                        <div class="component-item" draggable="true" data-component="test-data">
+                            <div class="font-bold text-sm terminal-green">💾 Test Data</div>
+                            <div class="text-xs text-gray-400">Data management layer</div>
+                        </div>
+                        <div class="component-item" draggable="true" data-component="utilities">
+                            <div class="font-bold text-sm terminal-green">🔧 Utilities</div>
+                            <div class="text-xs text-gray-400">Helper functions</div>
+                        </div>
+                        <div class="component-item" draggable="true" data-component="reports">
+                            <div class="font-bold text-sm terminal-green">📊 Reports</div>
+                            <div class="text-xs text-gray-400">Test result generation</div>
+                        </div>
+                        <div class="component-item" draggable="true" data-component="config">
+                            <div class="font-bold text-sm terminal-green">⚙️ Configuration</div>
+                            <div class="text-xs text-gray-400">Environment settings</div>
+                        </div>
+                        <div class="component-item" draggable="true" data-component="api-tests">
+                            <div class="font-bold text-sm terminal-green">🔌 API Tests</div>
+                            <div class="text-xs text-gray-400">API testing module</div>
+                        </div>
+                        <div class="component-item" draggable="true" data-component="ci-cd">
+                            <div class="font-bold text-sm terminal-green">🔄 CI/CD</div>
+                            <div class="text-xs text-gray-400">Pipeline integration</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Framework Canvas -->
+                <div class="lg:col-span-2 glass-card p-6 reveal">
+                    <h3 class="font-mono text-xl font-bold mb-4 terminal-green">Framework Architecture</h3>
+                    <div id="framework-builder" class="framework-builder">
+                        <div class="text-center text-gray-400">
+                            <div class="text-4xl mb-4">🏗️</div>
+                            <p>Drag components here to build your framework</p>
+                            <p class="text-sm mt-2">Start with the Test Engine as your foundation</p>
+                        </div>
+                    </div>
+                    <div class="mt-4 flex gap-4">
+                        <button onclick="generateFramework()" class="px-4 py-2 terminal-green-bg text-deep-space font-bold rounded-lg hover-lift">
+                            Generate Code
+                        </button>
+                        <button onclick="clearFramework()" class="px-4 py-2 border border-error-red text-error-red font-bold rounded-lg hover:bg-error-red hover:text-soft-white transition-all">
+                            Clear All
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Framework Preview -->
+                <div class="glass-card p-6 reveal">
+                    <h3 class="font-mono text-xl font-bold mb-4 terminal-green">Framework Stats</h3>
+                    <div class="space-y-4">
+                        <div class="performance-metric">
+                            <div class="text-2xl font-bold terminal-green" id="component-count">0</div>
+                            <div class="text-xs text-gray-400">Components</div>
+                        </div>
+                        <div class="performance-metric">
+                            <div class="text-2xl font-bold muted-blue" id="complexity-score">0</div>
+                            <div class="text-xs text-gray-400">Complexity</div>
+                        </div>
+                        <div class="performance-metric">
+                            <div class="text-2xl font-bold warning-amber" id="coverage-estimate">0%</div>
+                            <div class="text-xs text-gray-400">Coverage</div>
+                        </div>
+                        <div class="performance-metric">
+                            <div class="text-2xl font-bold terminal-green" id="maintainability">0</div>
+                            <div class="text-xs text-gray-400">Maintainability</div>
+                        </div>
+                    </div>
+                    
+                    <div class="mt-6">
+                        <h4 class="font-mono text-sm font-bold mb-2 terminal-green">Framework Type</h4>
+                        <div id="framework-type" class="text-sm text-gray-400">
+                            Not configured
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Generated Code Display -->
+    <section class="py-20 px-6" id="code-section" style="display: none;">
+        <div class="container mx-auto">
+            <div class="text-center mb-12 reveal">
+                <h2 class="font-mono text-3xl lg:text-4xl font-bold mb-4 gradient-text">Generated Framework Code</h2>
+                <p class="text-gray-300 text-lg">Your custom automation framework architecture</p>
+            </div>
+            
+            <div class="grid lg:grid-cols-2 gap-8">
+                <div class="glass-card p-6 reveal">
+                    <h3 class="font-mono text-xl font-bold mb-4 terminal-green">Project Structure</h3>
+                    <div class="code-block">
+                        <pre id="project-structure"></pre>
+                    </div>
+                </div>
+                
+                <div class="glass-card p-6 reveal">
+                    <h3 class="font-mono text-xl font-bold mb-4 terminal-green">Sample Test File</h3>
+                    <div class="code-block">
+                        <pre id="sample-test"></pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Project Gallery -->
+    <section class="py-20 px-6">
+        <div class="container mx-auto">
+            <div class="text-center mb-12 reveal">
+                <h2 class="font-mono text-3xl lg:text-4xl font-bold mb-4 gradient-text">Featured Projects</h2>
+                <p class="text-gray-300 text-lg">Real-world automation solutions and their impact</p>
+            </div>
+            
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8" id="project-gallery">
+                <!-- Project 1: Enterprise Framework -->
+                <div class="project-card reveal" data-category="framework">
+                    <div class="project-image">🏢</div>
+                    <div class="p-6">
+                        <h3 class="font-mono text-xl font-bold mb-2 terminal-green">Enterprise Automation Framework</h3>
+                        <p class="text-gray-400 text-sm mb-4">
+                            Comprehensive test automation solution for Cedar Gate Technologies, 
+                            integrating multiple testing tools and CI/CD pipelines.
+                        </p>
+                        <div class="grid grid-cols-2 gap-4 mb-4">
+                            <div class="text-center">
+                                <div class="text-lg font-bold terminal-green">150+</div>
+                                <div class="text-xs text-gray-400">Test Cases</div>
+                            </div>
+                            <div class="text-center">
+                                <div class="text-lg font-bold muted-blue">90%</div>
+                                <div class="text-xs text-gray-400">Coverage</div>
+                            </div>
+                        </div>
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="px-2 py-1 bg-terminal-green/20 text-terminal-green text-xs rounded">Katalon</span>
+                            <span class="px-2 py-1 bg-muted-blue/20 text-muted-blue text-xs rounded">Jenkins</span>
+                            <span class="px-2 py-1 bg-warning-amber/20 text-warning-amber text-xs rounded">JSON</span>
+                        </div>
+                        <button onclick="showProjectDetails('enterprise')" class="w-full py-2 border border-terminal-green text-terminal-green font-bold rounded-lg hover:bg-terminal-green hover:text-deep-space transition-all">
+                            View Details
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Project 2: API Testing Suite -->
+                <div class="project-card reveal" data-category="api">
+                    <div class="project-image">🔌</div>
+                    <div class="p-6">
+                        <h3 class="font-mono text-xl font-bold mb-2 terminal-green">API Testing Suite</h3>
+                        <p class="text-gray-400 text-sm mb-4">
+                            REST API testing framework with automated validation, 
+                            performance monitoring, and comprehensive reporting.
+                        </p>
+                        <div class="grid grid-cols-2 gap-4 mb-4">
+                            <div class="text-center">
+                                <div class="text-lg font-bold terminal-green">75</div>
+                                <div class="text-xs text-gray-400">API Tests</div>
+                            </div>
+                            <div class="text-center">
+                                <div class="text-lg font-bold muted-blue">95%</div>
+                                <div class="text-xs text-gray-400">Pass Rate</div>
+                            </div>
+                        </div>
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="px-2 py-1 bg-terminal-green/20 text-terminal-green text-xs rounded">Postman</span>
+                            <span class="px-2 py-1 bg-muted-blue/20 text-muted-blue text-xs rounded">REST Assured</span>
+                            <span class="px-2 py-1 bg-warning-amber/20 text-warning-amber text-xs rounded">Newman</span>
+                        </div>
+                        <button onclick="showProjectDetails('api')" class="w-full py-2 border border-terminal-green text-terminal-green font-bold rounded-lg hover:bg-terminal-green hover:text-deep-space transition-all">
+                            View Details
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Project 3: Performance Testing -->
+                <div class="project-card reveal" data-category="performance">
+                    <div class="project-image">⚡</div>
+                    <div class="p-6">
+                        <h3 class="font-mono text-xl font-bold mb-2 terminal-green">Performance Testing Framework</h3>
+                        <p class="text-gray-400 text-sm mb-4">
+                            Load and stress testing solution with real-time monitoring, 
+                            bottleneck identification, and scalability analysis.
+                        </p>
+                        <div class="grid grid-cols-2 gap-4 mb-4">
+                            <div class="text-center">
+                                <div class="text-lg font-bold terminal-green">10K</div>
+                                <div class="text-xs text-gray-400">Concurrent Users</div>
+                            </div>
+                            <div class="text-center">
+                                <div class="text-lg font-bold muted-blue">200ms</div>
+                                <div class="text-xs text-gray-400">Avg Response</div>
+                            </div>
+                        </div>
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="px-2 py-1 bg-terminal-green/20 text-terminal-green text-xs rounded">JMeter</span>
+                            <span class="px-2 py-1 bg-muted-blue/20 text-muted-blue text-xs rounded">Grafana</span>
+                            <span class="px-2 py-1 bg-warning-amber/20 text-warning-amber text-xs rounded">InfluxDB</span>
+                        </div>
+                        <button onclick="showProjectDetails('performance')" class="w-full py-2 border border-terminal-green text-terminal-green font-bold rounded-lg hover:bg-terminal-green hover:text-deep-space transition-all">
+                            View Details
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Project 4: CI/CD Integration -->
+                <div class="project-card reveal" data-category="ci-cd">
+                    <div class="project-image">🔄</div>
+                    <div class="p-6">
+                        <h3 class="font-mono text-xl font-bold mb-2 terminal-green">CI/CD Pipeline Integration</h3>
+                        <p class="text-gray-400 text-sm mb-4">
+                            Automated testing pipeline with parallel execution, 
+                            quality gates, and deployment automation across environments.
+                        </p>
+                        <div class="grid grid-cols-2 gap-4 mb-4">
+                            <div class="text-center">
+                                <div class="text-lg font-bold terminal-green">85%</div>
+                                <div class="text-xs text-gray-400">Time Reduction</div>
+                            </div>
+                            <div class="text-center">
+                                <div class="text-lg font-bold muted-blue">24/7</div>
+                                <div class="text-xs text-gray-400">Availability</div>
+                            </div>
+                        </div>
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="px-2 py-1 bg-terminal-green/20 text-terminal-green text-xs rounded">Jenkins</span>
+                            <span class="px-2 py-1 bg-muted-blue/20 text-muted-blue text-xs rounded">Docker</span>
+                            <span class="px-2 py-1 bg-warning-amber/20 text-warning-amber text-xs rounded">Kubernetes</span>
+                        </div>
+                        <button onclick="showProjectDetails('cicd')" class="w-full py-2 border border-terminal-green text-terminal-green font-bold rounded-lg hover:bg-terminal-green hover:text-deep-space transition-all">
+                            View Details
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Project 5: Mobile Testing -->
+                <div class="project-card reveal" data-category="framework">
+                    <div class="project-image">📱</div>
+                    <div class="p-6">
+                        <h3 class="font-mono text-xl font-bold mb-2 terminal-green">Mobile Testing Framework</h3>
+                        <p class="text-gray-400 text-sm mb-4">
+                            Cross-platform mobile testing solution with device farm 
+                            integration and automated device management.
+                        </p>
+                        <div class="grid grid-cols-2 gap-4 mb-4">
+                            <div class="text-center">
+                                <div class="text-lg font-bold terminal-green">50+</div>
+                                <div class="text-xs text-gray-400">Devices</div>
+                            </div>
+                            <div class="text-center">
+                                <div class="text-lg font-bold muted-blue">98%</div>
+                                <div class="text-xs text-gray-400">Compatibility</div>
+                            </div>
+                        </div>
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="px-2 py-1 bg-terminal-green/20 text-terminal-green text-xs rounded">Appium</span>
+                            <span class="px-2 py-1 bg-muted-blue/20 text-muted-blue text-xs rounded">BrowserStack</span>
+                            <span class="px-2 py-1 bg-warning-amber/20 text-warning-amber text-xs rounded">Cypress</span>
+                        </div>
+                        <button onclick="showProjectDetails('mobile')" class="w-full py-2 border border-terminal-green text-terminal-green font-bold rounded-lg hover:bg-terminal-green hover:text-deep-space transition-all">
+                            View Details
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Project 6: Data-Driven Testing -->
+                <div class="project-card reveal" data-category="framework">
+                    <div class="project-image">📊</div>
+                    <div class="p-6">
+                        <h3 class="font-mono text-xl font-bold mb-2 terminal-green">Data-Driven Testing Suite</h3>
+                        <p class="text-gray-400 text-sm mb-4">
+                            JSON-based data management system with dynamic test data 
+                            generation and automated test case creation.
+                        </p>
+                        <div class="grid grid-cols-2 gap-4 mb-4">
+                            <div class="text-center">
+                                <div class="text-lg font-bold terminal-green">500+</div>
+                                <div class="text-xs text-gray-400">Test Scenarios</div>
+                            </div>
+                            <div class="text-center">
+                                <div class="text-lg font-bold muted-blue">95%</div>
+                                <div class="text-xs text-gray-400">Data Reuse</div>
+                            </div>
+                        </div>
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="px-2 py-1 bg-terminal-green/20 text-terminal-green text-xs rounded">JSON</span>
+                            <span class="px-2 py-1 bg-muted-blue/20 text-muted-blue text-xs rounded">Data Factory</span>
+                            <span class="px-2 py-1 bg-warning-amber/20 text-warning-amber text-xs rounded">Faker</span>
+                        </div>
+                        <button onclick="showProjectDetails('datadriven')" class="w-full py-2 border border-terminal-green text-terminal-green font-bold rounded-lg hover:bg-terminal-green hover:text-deep-space transition-all">
+                            View Details
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Project Details Modal -->
+    <div id="project-modal" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden">
+        <div class="flex items-center justify-center min-h-screen p-4">
+            <div class="glass-card max-w-4xl w-full max-h-screen overflow-y-auto">
+                <div class="p-6">
+                    <div class="flex justify-between items-center mb-6">
+                        <h2 id="modal-title" class="font-mono text-2xl font-bold gradient-text"></h2>
+                        <button onclick="closeProjectModal()" class="text-gray-400 hover:text-error-red text-2xl">&times;</button>
+                    </div>
+                    <div id="modal-content"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Footer -->
+    <footer class="py-12 px-6 border-t border-gray-800">
+        <div class="container mx-auto text-center">
+            <div class="font-mono text-sm text-gray-400">
+                <p>&copy; 2024 Manoj Tamang. Crafted with precision for QA excellence.</p>
+            </div>
+        </div>
+    </footer>
+    
+    <script>
+        // Global variables
+        let frameworkComponents = [];
+        let draggedElement = null;
+        
+        // Initialize page
+        document.addEventListener('DOMContentLoaded', () => {
+            initScrollAnimations();
+            initFrameworkBuilder();
+        });
+        
+        // Scroll animations
+        function initScrollAnimations() {
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            };
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('active');
+                    }
+                });
+            }, observerOptions);
+            
+            document.querySelectorAll('.reveal').forEach(el => {
+                observer.observe(el);
+            });
+        }
+        
+        // Framework Builder
+        function initFrameworkBuilder() {
+            const builder = document.getElementById('framework-builder');
+            const components = document.querySelectorAll('.component-item');
+            
+            // Add drag event listeners to components
+            components.forEach(component => {
+                component.addEventListener('dragstart', handleDragStart);
+                component.addEventListener('dragend', handleDragEnd);
+            });
+            
+            // Add drop event listeners to builder
+            builder.addEventListener('dragover', handleDragOver);
+            builder.addEventListener('drop', handleDrop);
+            builder.addEventListener('dragenter', handleDragEnter);
+            builder.addEventListener('dragleave', handleDragLeave);
+        }
+        
+        function handleDragStart(e) {
+            draggedElement = e.target;
+            e.target.classList.add('dragging');
+        }
+        
+        function handleDragEnd(e) {
+            e.target.classList.remove('dragging');
+        }
+        
+        function handleDragOver(e) {
+            e.preventDefault();
+        }
+        
+        function handleDragEnter(e) {
+            e.preventDefault();
+            e.target.classList.add('drag-over');
+        }
+        
+        function handleDragLeave(e) {
+            e.target.classList.remove('drag-over');
+        }
+        
+        function handleDrop(e) {
+            e.preventDefault();
+            e.target.classList.remove('drag-over');
+            
+            if (draggedElement) {
+                const componentType = draggedElement.getAttribute('data-component');
+                addFrameworkComponent(componentType);
+            }
+        }
+        
+        function addFrameworkComponent(type) {
+            const builder = document.getElementById('framework-builder');
+            const componentData = getComponentData(type);
+            
+            // Check if component already exists
+            if (frameworkComponents.find(c => c.type === type)) {
+                showNotification('Component already added!', 'warning');
+                return;
+            }
+            
+            frameworkComponents.push({
+                type: type,
+                name: componentData.name,
+                description: componentData.description
+            });
+            
+            // Clear placeholder if this is the first component
+            if (frameworkComponents.length === 1) {
+                builder.innerHTML = '';
+            }
+            
+            // Create component element
+            const componentEl = document.createElement('div');
+            componentEl.className = 'framework-component';
+            componentEl.innerHTML = `
+                <div class="flex justify-between items-start">
+                    <div>
+                        <div class="font-bold text-sm terminal-green">${componentData.name}</div>
+                        <div class="text-xs text-gray-400 mt-1">${componentData.description}</div>
+                    </div>
+                    <button class="remove-btn" onclick="removeFrameworkComponent('${type}')">×</button>
+                </div>
+            `;
+            
+            builder.appendChild(componentEl);
+            updateFrameworkStats();
+            
+            // Animate addition
+            anime({
+                targets: componentEl,
+                scale: [0.8, 1],
+                opacity: [0, 1],
+                duration: 300,
+                easing: 'easeOutQuad'
+            });
+        }
+        
+        function removeFrameworkComponent(type) {
+            frameworkComponents = frameworkComponents.filter(c => c.type !== type);
+            updateFrameworkStats();
+            
+            // If no components left, show placeholder
+            if (frameworkComponents.length === 0) {
+                const builder = document.getElementById('framework-builder');
+                builder.innerHTML = `
+                    <div class="text-center text-gray-400">
+                        <div class="text-4xl mb-4">🏗️</div>
+                        <p>Drag components here to build your framework</p>
+                        <p class="text-sm mt-2">Start with the Test Engine as your foundation</p>
+                    </div>
+                `;
+            }
+        }
+        
+        function getComponentData(type) {
+            const components = {
+                'test-engine': { name: 'Test Engine', description: 'Core automation driver (Selenium/Cypress/Katalon)' },
+                'page-objects': { name: 'Page Objects', description: 'UI element mappings and interactions' },
+                'test-data': { name: 'Test Data', description: 'Data management and generation layer' },
+                'utilities': { name: 'Utilities', description: 'Helper functions and custom commands' },
+                'reports': { name: 'Reports', description: 'Test result generation and analytics' },
+                'config': { name: 'Configuration', description: 'Environment and settings management' },
+                'api-tests': { name: 'API Tests', description: 'REST API testing capabilities' },
+                'ci-cd': { name: 'CI/CD Integration', description: 'Pipeline automation and deployment' }
+            };
+            return components[type] || { name: 'Unknown', description: 'Component description' };
+        }
+        
+        function updateFrameworkStats() {
+            const componentCount = frameworkComponents.length;
+            const complexity = Math.min(componentCount * 15 + Math.random() * 20, 100);
+            const coverage = Math.min(componentCount * 12 + Math.random() * 25, 100);
+            const maintainability = Math.max(100 - complexity + Math.random() * 15, 20);
+            
+            document.getElementById('component-count').textContent = componentCount;
+            document.getElementById('complexity-score').textContent = Math.round(complexity);
+            document.getElementById('coverage-estimate').textContent = Math.round(coverage) + '%';
+            document.getElementById('maintainability').textContent = Math.round(maintainability);
+            
+            // Update framework type
+            let type = 'Basic';
+            if (componentCount >= 6) type = 'Enterprise';
+            else if (componentCount >= 4) type = 'Advanced';
+            else if (componentCount >= 2) type = 'Intermediate';
+            
+            document.getElementById('framework-type').textContent = type + ' Framework';
+        }
+        
+        function clearFramework() {
+            frameworkComponents = [];
+            const builder = document.getElementById('framework-builder');
+            builder.innerHTML = `
+                <div class="text-center text-gray-400">
+                    <div class="text-4xl mb-4">🏗️</div>
+                    <p>Drag components here to build your framework</p>
+                    <p class="text-sm mt-2">Start with the Test Engine as your foundation</p>
+                </div>
+            `;
+            updateFrameworkStats();
+            hideCodeSection();
+        }
+        
+        function generateFramework() {
+            if (frameworkComponents.length === 0) {
+                showNotification('Please add components to your framework first!', 'warning');
+                return;
+            }
+            
+            generateProjectStructure();
+            generateSampleTest();
+            showCodeSection();
+            showNotification('Framework generated successfully!', 'success');
+        }
+        
+        function generateProjectStructure() {
+            const structure = `
+automation-framework/
+├── src/
+│   ├── main/
+│   │   ├── java/
+│   │   │   ├── pages/          # Page Objects
+│   │   │   ├── utils/          # Utility classes
+│   │   │   └── config/         # Configuration
+│   │   └── resources/
+│   │       ├── testdata/       # Test data files
+│   │       └── config/         # Environment configs
+│   └── test/
+│       ├── java/
+│       │   ├── tests/          # Test classes
+│       │   ├── api/            # API tests
+│       │   └── performance/    # Performance tests
+│       └── resources/
+│           ├── features/       # BDD features
+│           └── reports/        # Test reports
+├── pom.xml                     # Maven configuration
+├── Jenkinsfile                 # CI/CD pipeline
+├── docker-compose.yml          # Container setup
+└── README.md                   # Documentation
+            `.trim();
+            
+            document.getElementById('project-structure').textContent = structure;
+        }
+        
+        function generateSampleTest() {
+            const test = `
+import org.testng.annotations.Test;
+import pages.LoginPage;
+import utils.TestDataManager;
+import config.WebDriverManager;
+
+public class LoginTest extends BaseTest {
+    
+    @Test(description = "Verify successful login with valid credentials")
+    public void testValidLogin() {
+        // Arrange
+        LoginPage loginPage = new LoginPage(driver);
+        TestDataManager testData = new TestDataManager();
+        
+        // Act
+        loginPage.navigateToLogin();
+        loginPage.enterUsername(testData.getValidUsername());
+        loginPage.enterPassword(testData.getValidPassword());
+        loginPage.clickLoginButton();
+        
+        // Assert
+        loginPage.verifySuccessfulLogin();
+        
+        // Log results
+        ReportManager.logPass("Login successful with valid credentials");
+    }
+    
+    @Test(description = "Verify login fails with invalid credentials")
+    public void testInvalidLogin() {
+        // Arrange
+        LoginPage loginPage = new LoginPage(driver);
+        TestDataManager testData = new TestDataManager();
+        
+        // Act
+        loginPage.navigateToLogin();
+        loginPage.enterUsername(testData.getInvalidUsername());
+        loginPage.enterPassword(testData.getInvalidPassword());
+        loginPage.clickLoginButton();
+        
+        // Assert
+        loginPage.verifyErrorMessage("Invalid credentials");
+        
+        // Log results
+        ReportManager.logPass("Login correctly failed with invalid credentials");
+    }
+}
+            `.trim();
+            
+            document.getElementById('sample-test').textContent = test;
+        }
+        
+        function showCodeSection() {
+            document.getElementById('code-section').style.display = 'block';
+            document.getElementById('code-section').scrollIntoView({ behavior: 'smooth' });
+        }
+        
+        function hideCodeSection() {
+            document.getElementById('code-section').style.display = 'none';
+        }
+        
+        // Project filtering
+        function filterProjects(category) {
+            const cards = document.querySelectorAll('.project-card');
+            const buttons = document.querySelectorAll('.filter-btn');
+            
+            // Update button states
+            buttons.forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+            
+            // Filter cards
+            cards.forEach(card => {
+                if (category === 'all' || card.getAttribute('data-category') === category) {
+                    card.style.display = 'block';
+                    anime({
+                        targets: card,
+                        opacity: [0, 1],
+                        scale: [0.9, 1],
+                        duration: 300,
+                        easing: 'easeOutQuad'
+                    });
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
+        
+        // Project details modal
+        function showProjectDetails(projectType) {
+            const modal = document.getElementById('project-modal');
+            const title = document.getElementById('modal-title');
+            const content = document.getElementById('modal-content');
+            
+            const projectData = getProjectData(projectType);
+            title.textContent = projectData.title;
+            content.innerHTML = projectData.content;
+            
+            modal.classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+        }
+        
+        function closeProjectModal() {
+            const modal = document.getElementById('project-modal');
+            modal.classList.add('hidden');
+            document.body.style.overflow = 'auto';
+        }
+        
+        function getProjectData(type) {
+            const projects = {
+                enterprise: {
+                    title: 'Enterprise Automation Framework',
+                    content: `
+                        <div class="space-y-6">
+                            <img src="resources/framework-visualization.png" alt="Framework Architecture" class="w-full h-64 object-cover rounded-lg">
+                            <div class="grid md:grid-cols-2 gap-6">
+                                <div>
+                                    <h3 class="font-mono text-lg font-bold terminal-green mb-3">Key Features</h3>
+                                    <ul class="text-gray-400 space-y-2 text-sm">
+                                        <li>• Multi-tool integration (Katalon, Selenium, Cypress)</li>
+                                        <li>• JSON-based data management system</li>
+                                        <li>• Parallel test execution capabilities</li>
+                                        <li>• Comprehensive reporting and analytics</li>
+                                        <li>• Cross-browser and cross-platform support</li>
+                                        <li>• CI/CD pipeline integration</li>
+                                    </ul>
+                                </div>
+                                <div>
+                                    <h3 class="font-mono text-lg font-bold terminal-green mb-3">Impact Metrics</h3>
+                                    <div class="space-y-3">
+                                        <div class="flex justify-between">
+                                            <span>Manual Effort Reduction</span>
+                                            <span class="terminal-green">90%</span>
+                                        </div>
+                                        <div class="flex justify-between">
+                                            <span>Test Execution Time</span>
+                                            <span class="terminal-green">4hrs → 15min</span>
+                                        </div>
+                                        <div class="flex justify-between">
+                                            <span>Test Coverage</span>
+                                            <span class="terminal-green">92%</span>
+                                        </div>
+                                        <div class="flex justify-between">
+                                            <span>Defect Detection Rate</span>
+                                            <span class="terminal-green">85%</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div>
+                                <h3 class="font-mono text-lg font-bold terminal-green mb-3">Technologies Used</h3>
+                                <div class="flex flex-wrap gap-2">
+                                    <span class="px-3 py-1 bg-terminal-green/20 text-terminal-green text-sm rounded">Katalon Studio</span>
+                                    <span class="px-3 py-1 bg-muted-blue/20 text-muted-blue text-sm rounded">Selenium WebDriver</span>
+                                    <span class="px-3 py-1 bg-warning-amber/20 text-warning-amber text-sm rounded">Jenkins</span>
+                                    <span class="px-3 py-1 bg-error-red/20 text-error-red text-sm rounded">Docker</span>
+                                    <span class="px-3 py-1 bg-terminal-green/20 text-terminal-green text-sm rounded">JSON</span>
+                                    <span class="px-3 py-1 bg-muted-blue/20 text-muted-blue text-sm rounded">TestNG</span>
+                                </div>
+                            </div>
+                        </div>
+                    `
+                },
+                api: {
+                    title: 'API Testing Suite',
+                    content: `
+                        <div class="space-y-6">
+                            <div class="grid md:grid-cols-2 gap-6">
+                                <div>
+                                    <h3 class="font-mono text-lg font-bold terminal-green mb-3">Testing Capabilities</h3>
+                                    <ul class="text-gray-400 space-y-2 text-sm">
+                                        <li>• REST API endpoint validation</li>
+                                        <li>• Request/response schema verification</li>
+                                        <li>• Performance and load testing</li>
+                                        <li>• Authentication and authorization tests</li>
+                                        <li>• Error handling and edge cases</li>
+                                        <li>• Contract testing with OpenAPI</li>
+                                    </ul>
+                                </div>
+                                <div>
+                                    <h3 class="font-mono text-lg font-bold terminal-green mb-3">Test Results</h3>
+                                    <div class="space-y-3">
+                                        <div class="flex justify-between">
+                                            <span>Total API Tests</span>
+                                            <span class="terminal-green">75</span>
+                                        </div>
+                                        <div class="flex justify-between">
+                                            <span>Pass Rate</span>
+                                            <span class="terminal-green">95%</span>
+                                        </div>
+                                        <div class="flex justify-between">
+                                            <span>Average Response Time</span>
+                                            <span class="terminal-green">150ms</span>
+                                        </div>
+                                        <div class="flex justify-between">
+                                            <span>Coverage</span>
+                                            <span class="terminal-green">88%</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div>
+                                <h3 class="font-mono text-lg font-bold terminal-green mb-3">Implementation</h3>
+                                <div class="code-block">
+                                    <pre>// Sample API Test
+given()
+    .baseUri("https://api.example.com")
+    .header("Authorization", "Bearer " + authToken)
+    .body(requestBody)
+.when()
+    .post("/users")
+.then()
+    .statusCode(201)
+    .body("id", notNullValue())
+    .body("name", equalTo("John Doe"));</pre>
+                                </div>
+                            </div>
+                        </div>
+                    `
+                }
+                // Add more project details as needed
+            };
+            
+            return projects[type] || { title: 'Project Details', content: '<p>Project details coming soon...</p>' };
+        }
+        
+        function showNotification(message, type = 'info') {
+            // Simple notification system
+            const notification = document.createElement('div');
+            notification.className = `fixed top-20 right-4 p-4 rounded-lg z-50 ${
+                type === 'success' ? 'bg-terminal-green text-deep-space' :
+                type === 'warning' ? 'bg-warning-amber text-deep-space' :
+                'bg-muted-blue text-soft-white'
+            }`;
+            notification.textContent = message;
+            
+            document.body.appendChild(notification);
+            
+            anime({
+                targets: notification,
+                translateX: [300, 0],
+                opacity: [0, 1],
+                duration: 300,
+                easing: 'easeOutQuad'
+            });
+            
+            setTimeout(() => {
+                anime({
+                    targets: notification,
+                    translateX: [0, 300],
+                    opacity: [1, 0],
+                    duration: 300,
+                    easing: 'easeInQuad',
+                    complete: () => notification.remove()
+                });
+            }, 3000);
+        }
+    </script>
+</body>
+</html>

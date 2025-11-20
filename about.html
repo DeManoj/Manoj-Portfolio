@@ -1,0 +1,701 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About - Manoj Tamang | Senior QA Automation Engineer</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Inter:wght@300;400;500;600&family=Fira+Code:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --deep-space: #0a0e1a;
+            --terminal-green: #00ff41;
+            --warning-amber: #ffa500;
+            --error-red: #ff4757;
+            --steel-gray: #2c3e50;
+            --soft-white: #ecf0f1;
+            --muted-blue: #3742fa;
+            --dark-gray: #1e1e1e;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--deep-space);
+            color: var(--soft-white);
+            overflow-x: hidden;
+        }
+        
+        .font-mono { font-family: 'JetBrains Mono', monospace; }
+        .font-code { font-family: 'Fira Code', monospace; }
+        
+        .terminal-green { color: var(--terminal-green); }
+        .terminal-green-bg { background-color: var(--terminal-green); }
+        .warning-amber { color: var(--warning-amber); }
+        .error-red { color: var(--error-red); }
+        .muted-blue { color: var(--muted-blue); }
+        
+        .gradient-text {
+            background: linear-gradient(45deg, var(--terminal-green), var(--muted-blue));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .glass-card {
+            background: rgba(44, 62, 80, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(0, 255, 65, 0.2);
+            border-radius: 12px;
+        }
+        
+        .hover-lift {
+            transition: all 0.3s ease;
+        }
+        
+        .hover-lift:hover {
+            transform: translateY(-8px) rotateX(5deg);
+            box-shadow: 0 20px 40px rgba(0, 255, 65, 0.2);
+        }
+        
+        .reveal {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+            transition: all 0.6s ease;
+        }
+        
+        .timeline-item {
+            position: relative;
+            padding-left: 2rem;
+        }
+        
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0.5rem;
+            width: 12px;
+            height: 12px;
+            background: var(--terminal-green);
+            border-radius: 50%;
+            box-shadow: 0 0 10px rgba(0, 255, 65, 0.5);
+        }
+        
+        .timeline-item::after {
+            content: '';
+            position: absolute;
+            left: 5px;
+            top: 1.5rem;
+            width: 2px;
+            height: calc(100% - 1rem);
+            background: linear-gradient(to bottom, var(--terminal-green), transparent);
+        }
+        
+        .timeline-item:last-child::after {
+            display: none;
+        }
+        
+        .api-endpoint {
+            background: var(--dark-gray);
+            border: 1px solid var(--steel-gray);
+            border-radius: 8px;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .api-endpoint:hover {
+            border-color: var(--terminal-green);
+            box-shadow: 0 4px 12px rgba(0, 255, 65, 0.2);
+        }
+        
+        .api-method-get { color: var(--terminal-green); }
+        .api-method-post { color: var(--muted-blue); }
+        .api-method-put { color: var(--warning-amber); }
+        .api-method-delete { color: var(--error-red); }
+        
+        .skill-bar {
+            height: 8px;
+            background: var(--dark-gray);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+        
+        .skill-progress {
+            height: 100%;
+            background: linear-gradient(90deg, var(--terminal-green), var(--muted-blue));
+            border-radius: 4px;
+            transition: width 2s ease;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="fixed top-0 w-full z-50 glass-card">
+        <div class="container mx-auto px-6 py-4">
+            <div class="flex items-center justify-between">
+                <div class="font-mono text-xl font-bold gradient-text">manoj@qa:~$</div>
+                <div class="hidden md:flex space-x-8">
+                    <a href="index.html" class="nav-link hover:text-terminal-green transition-colors">Home</a>
+                    <a href="#about" class="nav-link hover:text-terminal-green transition-colors">About</a>
+                    <a href="projects.html" class="nav-link hover:text-terminal-green transition-colors">Projects</a>
+                    <a href="contact.html" class="nav-link hover:text-terminal-green transition-colors">Contact</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+    
+    <!-- Hero Section -->
+    <section id="about" class="pt-24 pb-12 px-6">
+        <div class="container mx-auto">
+            <div class="grid lg:grid-cols-2 gap-12 items-center">
+                <div class="reveal">
+                    <h1 class="font-mono text-4xl lg:text-5xl font-bold mb-6 gradient-text">
+                        The Automation<br>Architect
+                    </h1>
+                    <p class="text-lg text-gray-300 mb-6 leading-relaxed">
+                        With 5+ years of pioneering automation practices across enterprise platforms, 
+                        I've established frameworks and standards that continue to drive QA excellence 
+                        and shape long-term testing strategies.
+                    </p>
+                    <div class="grid grid-cols-2 gap-4 mb-8">
+                        <div class="glass-card p-4 text-center">
+                            <div class="text-2xl font-bold terminal-green">90%</div>
+                            <div class="text-sm text-gray-400">Manual Effort Reduction</div>
+                        </div>
+                        <div class="glass-card p-4 text-center">
+                            <div class="text-2xl font-bold terminal-green">4hrs → 15min</div>
+                            <div class="text-sm text-gray-400">Test Execution Time</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="reveal">
+                    <div class="relative">
+                        <img src="resources/qa-engineer-portrait.png" alt="QA Engineer Portrait" class="w-full h-auto rounded-lg shadow-2xl">
+                        <div class="absolute inset-0 bg-gradient-to-t from-deep-space/30 to-transparent rounded-lg"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Skills Radar Chart -->
+    <section class="py-20 px-6">
+        <div class="container mx-auto">
+            <div class="text-center mb-12 reveal">
+                <h2 class="font-mono text-3xl lg:text-4xl font-bold mb-4 gradient-text">Technical Proficiency</h2>
+                <p class="text-gray-300 text-lg">Interactive skills assessment and expertise visualization</p>
+            </div>
+            
+            <div class="grid lg:grid-cols-2 gap-12">
+                <div class="glass-card p-8 reveal">
+                    <h3 class="font-mono text-xl font-bold mb-6 terminal-green">Skills Radar</h3>
+                    <div id="skills-radar" class="h-96"></div>
+                </div>
+                
+                <div class="space-y-6 reveal">
+                    <h3 class="font-mono text-xl font-bold terminal-green">Core Competencies</h3>
+                    
+                    <div class="space-y-4">
+                        <div>
+                            <div class="flex justify-between mb-2">
+                                <span>Test Automation Frameworks</span>
+                                <span class="terminal-green">95%</span>
+                            </div>
+                            <div class="skill-bar">
+                                <div class="skill-progress" style="width: 95%"></div>
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <div class="flex justify-between mb-2">
+                                <span>API Testing & Performance</span>
+                                <span class="terminal-green">92%</span>
+                            </div>
+                            <div class="skill-bar">
+                                <div class="skill-progress" style="width: 92%"></div>
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <div class="flex justify-between mb-2">
+                                <span>CI/CD Pipeline Integration</span>
+                                <span class="terminal-green">88%</span>
+                            </div>
+                            <div class="skill-bar">
+                                <div class="skill-progress" style="width: 88%"></div>
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <div class="flex justify-between mb-2">
+                                <span>Test Strategy & Planning</span>
+                                <span class="terminal-green">90%</span>
+                            </div>
+                            <div class="skill-bar">
+                                <div class="skill-progress" style="width: 90%"></div>
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <div class="flex justify-between mb-2">
+                                <span>Code Quality & Review</span>
+                                <span class="terminal-green">85%</span>
+                            </div>
+                            <div class="skill-bar">
+                                <div class="skill-progress" style="width: 85%"></div>
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <div class="flex justify-between mb-2">
+                                <span>Team Leadership & Mentoring</span>
+                                <span class="terminal-green">82%</span>
+                            </div>
+                            <div class="skill-bar">
+                                <div class="skill-progress" style="width: 82%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Experience Timeline -->
+    <section class="py-20 px-6">
+        <div class="container mx-auto">
+            <div class="text-center mb-12 reveal">
+                <h2 class="font-mono text-3xl lg:text-4xl font-bold mb-4 gradient-text">Professional Journey</h2>
+                <p class="text-gray-300 text-lg">Key milestones and achievements in QA automation</p>
+            </div>
+            
+            <div class="max-w-4xl mx-auto">
+                <div class="space-y-8">
+                    <div class="timeline-item glass-card p-6 hover-lift reveal">
+                        <div class="flex flex-col md:flex-row md:items-center md:justify-between mb-4">
+                            <h3 class="font-mono text-xl font-bold terminal-green">Senior QA Automation Engineer</h3>
+                            <span class="text-warning-amber font-medium">June 2024 - Present</span>
+                        </div>
+                        <p class="text-gray-300 mb-3"><strong>Cedar Gate Technologies</strong></p>
+                        <ul class="text-gray-400 space-y-2 text-sm">
+                            <li>• Established automation standards and coding conventions for long-term success</li>
+                            <li>• Led automation for major releases, defining test strategy and risk assessment</li>
+                            <li>• Designed JSON-based data provider replacing Excel inputs, improving maintainability</li>
+                            <li>• Recognized as team's go-to problem solver for technical and logical challenges</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="timeline-item glass-card p-6 hover-lift reveal">
+                        <div class="flex flex-col md:flex-row md:items-center md:justify-between mb-4">
+                            <h3 class="font-mono text-xl font-bold terminal-green">Lead QA Automation Engineer</h3>
+                            <span class="text-warning-amber font-medium">June 2021 - Jan 2024</span>
+                        </div>
+                        <p class="text-gray-300 mb-3"><strong>Aqore Software Pvt. Ltd.</strong></p>
+                        <ul class="text-gray-400 space-y-2 text-sm">
+                            <li>• Pioneered company's first automation frameworks and standards</li>
+                            <li>• Reduced manual verification from 4 hours to 15 minutes across multiple clients</li>
+                            <li>• Led Jenkins CI/CD integration enabling scheduled and on-demand executions</li>
+                            <li>• Awarded Bug Hunter of the Year 2022 for detecting complex, high-impact defects</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="timeline-item glass-card p-6 hover-lift reveal">
+                        <div class="flex flex-col md:flex-row md:items-center md:justify-between mb-4">
+                            <h3 class="font-mono text-xl font-bold terminal-green">Computer Science Teacher</h3>
+                            <span class="text-warning-amber font-medium">Feb 2024 - Apr 2024</span>
+                        </div>
+                        <p class="text-gray-300 mb-3"><strong>Nepalaya English Public School</strong></p>
+                        <ul class="text-gray-400 space-y-2 text-sm">
+                            <li>• Taught programming fundamentals and software development principles</li>
+                            <li>• Developed curriculum for automation testing concepts</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- API Testing Playground -->
+    <section class="py-20 px-6">
+        <div class="container mx-auto">
+            <div class="text-center mb-12 reveal">
+                <h2 class="font-mono text-3xl lg:text-4xl font-bold mb-4 gradient-text">API Testing Playground</h2>
+                <p class="text-gray-300 text-lg">Interactive API testing interface with live endpoints</p>
+            </div>
+            
+            <div class="grid lg:grid-cols-3 gap-8">
+                <!-- API Endpoints -->
+                <div class="glass-card p-6 reveal">
+                    <h3 class="font-mono text-xl font-bold mb-4 terminal-green">Available Endpoints</h3>
+                    <div class="space-y-3">
+                        <div class="api-endpoint" onclick="testAPI('get', '/api/users')">
+                            <div class="flex items-center justify-between">
+                                <span class="api-method-get font-bold">GET</span>
+                                <span class="text-sm text-gray-400">/api/users</span>
+                            </div>
+                            <div class="text-xs text-gray-500 mt-1">Fetch user data</div>
+                        </div>
+                        
+                        <div class="api-endpoint" onclick="testAPI('post', '/api/auth')">
+                            <div class="flex items-center justify-between">
+                                <span class="api-method-post font-bold">POST</span>
+                                <span class="text-sm text-gray-400">/api/auth</span>
+                            </div>
+                            <div class="text-xs text-gray-500 mt-1">Authenticate user</div>
+                        </div>
+                        
+                        <div class="api-endpoint" onclick="testAPI('put', '/api/users/1')">
+                            <div class="flex items-center justify-between">
+                                <span class="api-method-put font-bold">PUT</span>
+                                <span class="text-sm text-gray-400">/api/users/1</span>
+                            </div>
+                            <div class="text-xs text-gray-500 mt-1">Update user data</div>
+                        </div>
+                        
+                        <div class="api-endpoint" onclick="testAPI('delete', '/api/users/1')">
+                            <div class="flex items-center justify-between">
+                                <span class="api-method-delete font-bold">DELETE</span>
+                                <span class="text-sm text-gray-400">/api/users/1</span>
+                            </div>
+                            <div class="text-xs text-gray-500 mt-1">Delete user</div>
+                        </div>
+                        
+                        <div class="api-endpoint" onclick="testAPI('get', '/api/health')">
+                            <div class="flex items-center justify-between">
+                                <span class="api-method-get font-bold">GET</span>
+                                <span class="text-sm text-gray-400">/api/health</span>
+                            </div>
+                            <div class="text-xs text-gray-500 mt-1">System health check</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Request Configuration -->
+                <div class="glass-card p-6 reveal">
+                    <h3 class="font-mono text-xl font-bold mb-4 terminal-green">Request Configuration</h3>
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium mb-2">Method</label>
+                            <input id="api-method" type="text" readonly class="w-full p-3 bg-dark-gray border border-terminal-green rounded-lg text-soft-white font-mono">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium mb-2">Endpoint</label>
+                            <input id="api-endpoint" type="text" readonly class="w-full p-3 bg-dark-gray border border-terminal-green rounded-lg text-soft-white font-mono">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium mb-2">Headers</label>
+                            <textarea id="api-headers" rows="4" class="w-full p-3 bg-dark-gray border border-steel-gray rounded-lg text-soft-white font-code text-sm" placeholder='{\n  "Content-Type": "application/json",\n  "Authorization": "Bearer token"\n}'></textarea>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium mb-2">Body (JSON)</label>
+                            <textarea id="api-body" rows="4" class="w-full p-3 bg-dark-gray border border-steel-gray rounded-lg text-soft-white font-code text-sm" placeholder='{\n  "username": "testuser",\n  "password": "testpass"\n}'></textarea>
+                        </div>
+                        <button onclick="sendAPIRequest()" class="w-full py-3 terminal-green-bg text-deep-space font-bold rounded-lg hover-lift">
+                            Send Request
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Response Display -->
+                <div class="glass-card p-6 reveal">
+                    <h3 class="font-mono text-xl font-bold mb-4 terminal-green">Response</h3>
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium mb-2">Status</label>
+                            <div id="response-status" class="p-3 bg-dark-gray border border-steel-gray rounded-lg text-soft-white font-mono text-sm">
+                                Ready to test
+                            </div>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium mb-2">Response Time</label>
+                            <div id="response-time" class="p-3 bg-dark-gray border border-steel-gray rounded-lg text-soft-white font-mono text-sm">
+                                0ms
+                            </div>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium mb-2">Response Body</label>
+                            <div id="response-body" class="p-3 bg-dark-gray border border-steel-gray rounded-lg text-soft-white font-code text-sm h-48 overflow-y-auto">
+                                <div class="text-gray-400">Click an endpoint to test the API...</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Certifications & Achievements -->
+    <section class="py-20 px-6">
+        <div class="container mx-auto">
+            <div class="text-center mb-12 reveal">
+                <h2 class="font-mono text-3xl lg:text-4xl font-bold mb-4 gradient-text">Certifications & Achievements</h2>
+                <p class="text-gray-300 text-lg">Professional recognition and continuous learning</p>
+            </div>
+            
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div class="glass-card p-6 text-center hover-lift reveal">
+                    <div class="text-4xl mb-4">🏆</div>
+                    <h3 class="font-mono text-lg font-bold mb-2 terminal-green">Bug Hunter of the Year</h3>
+                    <p class="text-gray-400 text-sm">Aqore Software - 2022</p>
+                    <p class="text-xs text-gray-500 mt-2">Recognized for detecting complex and high-impact defects</p>
+                </div>
+                
+                <div class="glass-card p-6 text-center hover-lift reveal">
+                    <div class="text-4xl mb-4">🥇</div>
+                    <h3 class="font-mono text-lg font-bold mb-2 terminal-green">Automation Pioneer</h3>
+                    <p class="text-gray-400 text-sm">Aqore Software - 2023</p>
+                    <p class="text-xs text-gray-500 mt-2">Established company's first automation frameworks</p>
+                </div>
+                
+                <div class="glass-card p-6 text-center hover-lift reveal">
+                    <div class="text-4xl mb-4">⭐</div>
+                    <h3 class="font-mono text-lg font-bold mb-2 terminal-green">Technical Excellence</h3>
+                    <p class="text-gray-400 text-sm">Cedar Gate - 2024</p>
+                    <p class="text-xs text-gray-500 mt-2">Go-to problem solver for technical challenges</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Footer -->
+    <footer class="py-12 px-6 border-t border-gray-800">
+        <div class="container mx-auto text-center">
+            <div class="font-mono text-sm text-gray-400">
+                <p>&copy; 2024 Manoj Tamang. Crafted with precision for QA excellence.</p>
+            </div>
+        </div>
+    </footer>
+    
+    <script>
+        // Initialize page
+        document.addEventListener('DOMContentLoaded', () => {
+            initScrollAnimations();
+            initSkillsRadar();
+            animateSkillBars();
+        });
+        
+        // Scroll animations
+        function initScrollAnimations() {
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            };
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('active');
+                    }
+                });
+            }, observerOptions);
+            
+            document.querySelectorAll('.reveal').forEach(el => {
+                observer.observe(el);
+            });
+        }
+        
+        // Skills radar chart
+        function initSkillsRadar() {
+            const chartElement = document.getElementById('skills-radar');
+            if (!chartElement) return;
+            
+            const chart = echarts.init(chartElement);
+            
+            const option = {
+                backgroundColor: 'transparent',
+                radar: {
+                    indicator: [
+                        { name: 'Katalon Studio', max: 100 },
+                        { name: 'Cypress', max: 100 },
+                        { name: 'Selenium', max: 100 },
+                        { name: 'API Testing', max: 100 },
+                        { name: 'Performance', max: 100 },
+                        { name: 'CI/CD', max: 100 },
+                        { name: 'Framework Design', max: 100 },
+                        { name: 'Leadership', max: 100 }
+                    ],
+                    axisName: {
+                        color: '#ecf0f1',
+                        fontFamily: 'JetBrains Mono'
+                    },
+                    splitLine: {
+                        lineStyle: { color: 'rgba(0, 255, 65, 0.2)' }
+                    },
+                    axisLine: {
+                        lineStyle: { color: 'rgba(0, 255, 65, 0.3)' }
+                    }
+                },
+                series: [{
+                    type: 'radar',
+                    data: [{
+                        value: [95, 90, 85, 92, 88, 85, 95, 82],
+                        name: 'Skills',
+                        areaStyle: {
+                            color: 'rgba(0, 255, 65, 0.1)'
+                        },
+                        lineStyle: {
+                            color: '#00ff41',
+                            width: 2
+                        },
+                        itemStyle: {
+                            color: '#00ff41'
+                        }
+                    }]
+                }]
+            };
+            
+            chart.setOption(option);
+        }
+        
+        // Animate skill bars
+        function animateSkillBars() {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const progressBars = entry.target.querySelectorAll('.skill-progress');
+                        progressBars.forEach(bar => {
+                            const width = bar.style.width;
+                            bar.style.width = '0%';
+                            setTimeout(() => {
+                                bar.style.width = width;
+                            }, 200);
+                        });
+                    }
+                });
+            });
+            
+            document.querySelectorAll('.skill-bar').forEach(bar => {
+                observer.observe(bar.parentElement);
+            });
+        }
+        
+        // API Testing Functions
+        function testAPI(method, endpoint) {
+            document.getElementById('api-method').value = method.toUpperCase();
+            document.getElementById('api-endpoint').value = endpoint;
+            
+            // Pre-fill headers and body based on endpoint
+            const headers = {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer your-token-here'
+            };
+            
+            document.getElementById('api-headers').value = JSON.stringify(headers, null, 2);
+            
+            if (method === 'post' || method === 'put') {
+                const body = {
+                    username: 'testuser',
+                    password: 'testpass123'
+                };
+                document.getElementById('api-body').value = JSON.stringify(body, null, 2);
+            } else {
+                document.getElementById('api-body').value = '';
+            }
+        }
+        
+        function sendAPIRequest() {
+            const method = document.getElementById('api-method').value.toLowerCase();
+            const endpoint = document.getElementById('api-endpoint').value;
+            
+            if (!method || !endpoint) {
+                alert('Please select an API endpoint first');
+                return;
+            }
+            
+            const startTime = performance.now();
+            
+            // Simulate API call
+            setTimeout(() => {
+                const endTime = performance.now();
+                const responseTime = Math.round(endTime - startTime);
+                
+                // Mock responses
+                const responses = {
+                    '/api/users': {
+                        status: 200,
+                        data: [
+                            { id: 1, name: 'John Doe', email: 'john@example.com' },
+                            { id: 2, name: 'Jane Smith', email: 'jane@example.com' }
+                        ]
+                    },
+                    '/api/auth': {
+                        status: 201,
+                        data: { token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...' }
+                    },
+                    '/api/users/1': {
+                        status: 200,
+                        data: { message: 'User updated successfully' }
+                    },
+                    '/api/health': {
+                        status: 200,
+                        data: { status: 'healthy', timestamp: new Date().toISOString() }
+                    }
+                };
+                
+                const response = responses[endpoint] || {
+                    status: Math.random() > 0.1 ? 200 : 404,
+                    data: { message: 'Request processed successfully' }
+                };
+                
+                // Update UI
+                const statusElement = document.getElementById('response-status');
+                const timeElement = document.getElementById('response-time');
+                const bodyElement = document.getElementById('response-body');
+                
+                if (response.status >= 200 && response.status < 300) {
+                    statusElement.className = 'p-3 bg-dark-gray border border-terminal-green rounded-lg text-soft-white font-mono text-sm terminal-green';
+                } else {
+                    statusElement.className = 'p-3 bg-dark-gray border border-error-red rounded-lg text-soft-white font-mono text-sm error-red';
+                }
+                
+                statusElement.textContent = `${response.status} ${getStatusText(response.status)}`;
+                timeElement.textContent = `${responseTime}ms`;
+                bodyElement.textContent = JSON.stringify(response.data, null, 2);
+                
+                // Animate response
+                anime({
+                    targets: [statusElement, timeElement, bodyElement],
+                    scale: [0.95, 1],
+                    opacity: [0.7, 1],
+                    duration: 300,
+                    easing: 'easeOutQuad'
+                });
+                
+            }, Math.random() * 800 + 200); // Simulate network delay
+        }
+        
+        function getStatusText(status) {
+            const statusTexts = {
+                200: 'OK',
+                201: 'Created',
+                400: 'Bad Request',
+                404: 'Not Found',
+                500: 'Internal Server Error'
+            };
+            return statusTexts[status] || 'Unknown';
+        }
+        
+        // Navigation
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
